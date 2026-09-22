@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Sketch & Portrait Challenge | Fine & Arts Club</title>
+<script src="https://cdn.tailwindcss.com"></script>
+<script src="https://www.gstatic.com/firebasejs/10.12.0/firebase-app-compat.js"></script>
+<script src="https://www.gstatic.com/firebasejs/10.12.0/firebase-firestore-compat.js"></script>
+</head>
+<body class="bg-[#f0ebf8] min-h-screen">
+<div class="max-w-[640px] mx-auto pt-6 px-4 pb-20">
+
+<!-- Header Card -->
+<div class="bg-white rounded-lg shadow border-t-[10px] border-[#673ab7] p-6 mb-3">
+<h1 class="text-[32px] leading-tight">Sketch & Portrait Challenge | Fine & Arts Club</h1>
+<p class="mt-3">Unleash your creativity and turn your imagination into art! ✨</p>
+<p class="mt-4 text-[14px]">The <b>Fine & Arts Club</b> presents the <b>Sketch & Portrait Challenge</b>, where students can showcase their artistic skills through sketching and creative artwork.</p>
+<div class="mt-4 space-y-2 text-[14px]">
+<p>📅 <b>Date:</b> 24 September 2026</p>
+<p>⏰ <b>Time:</b> 10:00 AM</p>
+<p>📍 <b>Venue:</b> SIET Building</p>
+<p>👥 <b>Open for:</b> All Students</p>
+</div>
+<p class="mt-4 text-[14px]">Choose any one theme and create your artwork:</p>
+<p class="mt-2 text-[14px] font-bold">Human vs AI • Life in 2050 • The Last Smartphone • A Robot With Human Nature • Nature & Life • A Face That Tells a Story • A Beautiful Sunset • My Dream World • An Emotion • Nature vs Concrete</p>
+<p class="mt-4 text-[14px]">📝 <b>Register through this form and be ready to express, imagine & create!</b></p>
+<p class="mt-3 text-[14px]"><b>Let your creativity take the stage! 🎨</b></p>
+<p class="mt-6 text-[13px] text-red-600">* Indicates required question</p>
+</div>
+
+<!-- Form Fields -->
+<div class="space-y-3" id="formBox">
+<div class="bg-white rounded-lg shadow p-6"><label class="font-medium">Name <span class="text-red-600">*</span></label><input id="name" class="w-full mt-6 border-b outline-none focus:border-purple-600 pb-1" placeholder="Your answer" required></div>
+<div class="bg-white rounded-lg shadow p-6"><label class="font-medium">Enrollment Number <span class="text-red-600">*</span></label><input id="enroll" class="w-full mt-6 border-b outline-none focus:border-purple-600 pb-1" placeholder="Your answer" required></div>
+<div class="bg-white rounded-lg shadow p-6"><label class="font-medium">Course <span class="text-red-600">*</span></label><input id="course" class="w-full mt-6 border-b outline-none focus:border-purple-600 pb-1" placeholder="Your answer" required></div>
+<div class="bg-white rounded-lg shadow p-6"><label class="font-medium">Semester And Year <span class="text-red-600">*</span></label><input id="sem" class="w-full mt-6 border-b outline-none focus:border-purple-600 pb-1" placeholder="Your answer" required></div>
+<div class="bg-white rounded-lg shadow p-6"><label class="font-medium">Email <span class="text-red-600">*</span></label><input id="email" type="email" class="w-full mt-6 border-b outline-none focus:border-purple-600 pb-1" placeholder="Your answer" required></div>
+<div class="bg-white rounded-lg shadow p-6"><label class="font-medium">Whatsapp Number <span class="text-red-600">*</span></label><input id="whatsapp" type="tel" class="w-full mt-6 border-b outline-none focus:border-purple-600 pb-1" placeholder="Your answer" required></div>
+
+<div class="flex justify-between items-center pt-2">
+<button onclick="submitForm()" class="bg-[#673ab7] text-white px-8 py-2.5 rounded font-medium">Submit</button>
+<button onclick="document.querySelectorAll('input').forEach(i=>i.value='')" class="text-[#673ab7] text-sm">Clear form</button>
+</div>
+<p class="text-[12px] mt-4">Never submit passwords through Google Forms.</p>
+</div>
+
+<div id="thanks" class="hidden bg-white rounded-lg shadow p-10 text-center mt-3">
+<h1 class="text-2xl">Sketch & Portrait Challenge</h1><p class="mt-3 text-gray-600">Your response has been recorded. 🎨</p><p class="mt-2 text-sm">We will contact you on Whatsapp for further details.</p>
+</div>
+
+</div>
+
+<script>
+const firebaseConfig = {apiKey: "AIzaSyBiJLamHfmLzNGDoVP1-96hHYEmf4diHtk",authDomain: "formforge-22735.firebaseapp.com",projectId: "formforge-22735",storageBucket: "formforge-22735.firebasestorage.app",messagingSenderId: "688939760627",appId: "1:688939760627:web:ad2b0838a4b77a4515f086"};
+firebase.initializeApp(firebaseConfig);const db=firebase.firestore();
+async function submitForm(){
+ let data = {
+  name: document.getElementById('name').value.trim(),
+  enroll: document.getElementById('enroll').value.trim(),
+  course: document.getElementById('course').value.trim(),
+  sem: document.getElementById('sem').value.trim(),
+  email: document.getElementById('email').value.trim(),
+  whatsapp: document.getElementById('whatsapp').value.trim(),
+  createdAt: new Date()
+ };
+ if(!data.name ||!data.enroll ||!data.course ||!data.sem ||!data.email ||!data.whatsapp){ alert("Please fill all required fields *"); return; }
+ await db.collection("art_challenge_2026").add(data);
+ document.getElementById('formBox').classList.add('hidden');
+ document.getElementById('thanks').classList.remove('hidden');
+ window.scrollTo(0,0);
+}
+</script>
+</body>
+</html>
