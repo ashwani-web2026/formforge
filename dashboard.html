@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html><head><meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1.0"><title>Art Challenge - Responses</title><script src="https://cdn.tailwindcss.com"></script><script src="https://www.gstatic.com/firebasejs/10.12.0/firebase-app-compat.js"></script><script src="https://www.gstatic.com/firebasejs/10.12.0/firebase-firestore-compat.js"></script></head>
+<body class="bg-[#f0ebf8] min-h-screen">
+<script>
+let p=prompt("🔒 Admin Password:"); if(p!=="ashwani123"){document.body.innerHTML="<h1 style='text-align:center;margin-top:100px;font-size:30px'>❌ Access Denied</h1>";throw new Error("no");}
+</script>
+<div class="max-w-[1200px] mx-auto p-6">
+<h1 class="text-2xl font-bold">Sketch & Portrait Challenge - Registrations</h1>
+<p id="count" class="text-gray-600 mt-1">Loading...</p>
+<div class="mt-4 flex gap-2"><button onclick="downloadCSV()" class="bg-green-600 text-white px-4 py-2 rounded text-sm">Download Excel (CSV)</button><button onclick="copyLink()" class="bg-white border px-4 py-2 rounded text-sm">Copy Public Form Link</button></div>
+<div id="tableBox" class="mt-6 bg-white rounded-lg shadow overflow-auto"></div>
+</div>
+<script>
+const firebaseConfig = {apiKey: "AIzaSyBiJLamHfmLzNGDoVP1-96hHYEmf4diHtk",authDomain: "formforge-22735.firebaseapp.com",projectId: "formforge-22735",storageBucket: "formforge-22735.firebasestorage.app",messagingSenderId: "688939760627",appId: "1:688939760627:web:ad2b0838a4b77a4515f086"};
+firebase.initializeApp(firebaseConfig);const db=firebase.firestore();
+let allData=[];
+async function load(){
+ let snap=await db.collection("art_challenge_2026").orderBy("createdAt","desc").get();
+ document.getElementById('count').innerText=`Total Responses: ${snap.size}`;
+ if(snap.empty){document.getElementById('tableBox').innerHTML="<p class='p-6'>No registrations yet</p>";return;}
+ allData=[]; let html=`<table class="w-full text-sm"><thead class="bg-gray-50 sticky top-0"><tr><th class="p-3 text-left">#</th><th class="p-3 text-left">Date</th><th class="p-3 text-left">Name</th><th class="p-3 text-left">Enrollment</th><th class="p-3 text-left">Course</th><th class="p-3 text-left">Sem/Year</th><th class="p-3 text-left">Email</th><th class="p-3 text-left">Whatsapp</th></tr></thead><tbody>`;
+ let i=1; snap.forEach(doc=>{let d=doc.data();allData.push(d);let date=d.createdAt?new Date(d.createdAt.seconds*1000).toLocaleString():"";html+=`<tr class="border-t hover:bg-gray-50"><td class="p-3">${i++}</td><td class="p-3">${date}</td><td class="p-3 font-medium">${d.name}</td><td class="p-3">${d.enroll}</td><td class="p-3">${d.course}</td><td class="p-3">${d.sem}</td><td class="p-3">${d.email}</td><td class="p-3">${d.whatsapp}</td></tr>`;});html+=`</tbody></table>`;
+ document.getElementById('tableBox').innerHTML=html;
+}
+function downloadCSV(){
+ let csv="Name,Enrollment,Course,Semester Year,Email,Whatsapp,Date\n";
+ allData.forEach(d=>{let date=d.createdAt?new Date(d.createdAt.seconds*1000).toLocaleString():"";csv+=`"${d.name}","${d.enroll}","${d.course}","${d.sem}","${d.email}","${d.whatsapp}","${date}"\n`;});
+ let blob=new Blob([csv],{type:'text/csv'});let a=document.createElement('a');a.href=URL.createObjectURL(blob);a.download="art_registrations.csv";a.click();
+}
+function copyLink(){let link=location.origin+location.pathname.replace('dashboard.html','')+'view.html';navigator.clipboard.writeText(link);alert("Public Form Link Copied: "+link);}
+load();
+</script></body></html>
