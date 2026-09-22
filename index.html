@@ -1,0 +1,16 @@
+<!DOCTYPE html><html><head><meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1.0"><title>Admin - Art Challenge</title><script src="https://cdn.tailwindcss.com"></script></head>
+<body class="bg-[#f0ebf8] min-h-screen flex items-center justify-center p-4">
+<script>
+let p=prompt("🔒 Admin Password:"); if(p!=="ashwani123"){document.body.innerHTML="<h1 style='text-align:center;margin-top:100px;font-size:30px'>❌ Access Denied</h1>";throw new Error("no");}
+</script>
+<div class="bg-white max-w-[500px] w-full rounded-lg shadow border-t-8 border-[#673ab7] p-8 text-center">
+<h1 class="text-2xl font-bold">Fine & Arts Club - Admin</h1>
+<p class="text-gray-600 mt-2">Sketch & Portrait Challenge 2026</p>
+<div class="mt-8 space-y-3">
+<a href="view.html" class="block w-full bg-white border border-[#673ab7] text-[#673ab7] py-3 rounded font-medium">👁️ View Public Form</a>
+<a href="dashboard.html" class="block w-full bg-[#673ab7] text-white py-3 rounded font-medium">📊 View All Responses</a>
+<button onclick="let l=location.origin+location.pathname.replace('index.html','')+'view.html';navigator.clipboard.writeText(l);alert('Copied: '+l)" class="block w-full bg-gray-100 py-3 rounded text-sm">📋 Copy Form Link for Students</button>
+</div>
+<p class="text-xs text-gray-400 mt-6">index.html is private. Never share this link. Only share view.html</p>
+</div>
+</body></html>
